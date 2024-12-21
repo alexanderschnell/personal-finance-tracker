@@ -58,7 +58,6 @@ public class Main extends Application implements TransactionListener {
     }
 
     // Create header
-
     private HBox createHeader() {
         HBox header = new HBox();
         header.setPadding(new Insets(20, 20, 20, 48));  // Set left padding to 50
@@ -76,7 +75,6 @@ public class Main extends Application implements TransactionListener {
         header.getChildren().add(title);
         return header;
     }
-
 
     // Create sidebar
     private VBox createSidebar() {

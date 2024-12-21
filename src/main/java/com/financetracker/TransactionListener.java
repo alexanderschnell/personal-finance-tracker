@@ -18,7 +18,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 // TransactionListener Interface
-
 public interface TransactionListener {
     void onTransactionAdded(Transaction transaction);
     void onTransactionRemoved(Transaction transaction);
