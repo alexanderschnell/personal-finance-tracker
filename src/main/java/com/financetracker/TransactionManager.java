@@ -15,9 +15,9 @@ public class TransactionManager {
             // Load the SQLite JDBC driver
             Class.forName("org.sqlite.JDBC");
 
-            // Don't need to create directories for a file in root project folder
-            String url = "jdbc:sqlite:finance_tracker.sqlite";
-            this.connection = DriverManager.getConnection(url);
+            // Keep real data out of the project folder (and out of git): ~/.myfinancepal/finance.db
+            // Override with -Dmyfinancepal.db=<path> (e.g. a throwaway file for testing).
+            this.connection = DriverManager.getConnection("jdbc:sqlite:" + databasePath());
 
             // Create table if it doesn't exist
             createTableIfNotExists();
@@ -28,6 +28,18 @@ public class TransactionManager {
             e.printStackTrace();
             throw new RuntimeException("Failed to connect to database: " + e.getMessage());
         }
+    }
+
+    static String databasePath() {
+        String override = System.getProperty("myfinancepal.db");
+        if (override != null && !override.isBlank()) {
+            return override;
+        }
+        File dir = new File(System.getProperty("user.home"), ".myfinancepal");
+        if (!dir.exists() && !dir.mkdirs()) {
+            throw new RuntimeException("Could not create data folder: " + dir.getAbsolutePath());
+        }
+        return new File(dir, "finance.db").getAbsolutePath();
     }
 
     private List<TransactionListener> listeners = new ArrayList<>();
