@@ -15,6 +15,9 @@ import java.math.BigDecimal;
 
 public class Main extends Application implements TransactionListener {
     private TransactionManager transactionManager;
+    private DebtManager debtManager;
+    private DebtsView debtsView;
+    private PayoffPlanView payoffPlanView;
     private BorderPane mainLayout;
     private Label balanceLabel;
     private Label incomeLabel;
@@ -26,26 +29,30 @@ public class Main extends Application implements TransactionListener {
             transactionManager = new TransactionManager();
             transactionManager.addTransactionListener(this); // Register as listener
 
+            // Debts are the heart of the app: created once and reused when navigating
+            debtManager = new DebtManager();
+            debtsView = new DebtsView(debtManager);
+            payoffPlanView = new PayoffPlanView(debtManager);
+            payoffPlanView.setOnStrategyChanged(debtsView::refresh);
+
             // Create main layout
             mainLayout = new BorderPane();
 
             // Create sidebar
             VBox sidebar = createSidebar();
-
-            // Set initial content (dashboard view)
-            VBox mainContent = createMainContent();
             HBox header = createHeader();
 
-            // Add components to main layout
+            // Add components to main layout - start on the Debts screen
             mainLayout.setLeft(sidebar);
-            mainLayout.setCenter(mainContent);
+            mainLayout.setCenter(debtsView);
             mainLayout.setTop(header);
 
             // Create scene
-            Scene scene = new Scene(mainLayout, 1280, 720);
+            Scene scene = new Scene(mainLayout, 1280, 760);
             scene.getStylesheets().add(getClass().getResource("/main_styles.css").toExternalForm());
+            scene.getStylesheets().add(getClass().getResource("/debt_styles.css").toExternalForm());
 
-            primaryStage.setTitle("Personal Finance Tracker");
+            primaryStage.setTitle("MyFinancePal");
             primaryStage.setScene(scene);
             primaryStage.setMinWidth(1280);
             primaryStage.setMinHeight(720);
@@ -83,18 +90,28 @@ public class Main extends Application implements TransactionListener {
         sidebar.setPrefWidth(250);
         sidebar.getStyleClass().add("sidebar");
 
-        Button dashboardBtn = createNavigationButton("Dashboard");
+        Button debtsBtn = createNavigationButton("Debts");
+        Button planBtn = createNavigationButton("Payoff Plan");
+        Button dashboardBtn = createNavigationButton("Cash Flow");
         Button transactionsBtn = createNavigationButton("Transactions");
         Button summaryBtn = createNavigationButton("Summary");
         Button settingsBtn = createNavigationButton("Settings");
 
         // Add navigation handlers
+        debtsBtn.setOnAction(e -> {
+            debtsView.refresh();
+            mainLayout.setCenter(debtsView);
+        });
+        planBtn.setOnAction(e -> {
+            payoffPlanView.refresh();
+            mainLayout.setCenter(payoffPlanView);
+        });
         dashboardBtn.setOnAction(e -> mainLayout.setCenter(createMainContent()));
         transactionsBtn.setOnAction(e -> mainLayout.setCenter(createTransactionsView()));
         summaryBtn.setOnAction(e -> mainLayout.setCenter(new FinanceDashboard(transactionManager)));
         settingsBtn.setOnAction(e -> mainLayout.setCenter(createSettingsView()));
 
-        sidebar.getChildren().addAll(dashboardBtn, transactionsBtn, summaryBtn, settingsBtn);
+        sidebar.getChildren().addAll(debtsBtn, planBtn, dashboardBtn, transactionsBtn, summaryBtn, settingsBtn);
         return sidebar;
     }
 
@@ -189,6 +206,9 @@ public class Main extends Application implements TransactionListener {
     }
 
     private void refreshFinancialSummary() {
+        if (balanceLabel == null) {
+            return; // Cash Flow screen hasn't been opened yet
+        }
         FinancialSummary financialSummary = transactionManager.getFinancialSummary();
         BigDecimal totalIncome = financialSummary.getTotalIncome();
         BigDecimal totalExpenses = financialSummary.getTotalExpenses();
