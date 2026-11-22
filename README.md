@@ -1,6 +1,6 @@
 # MyFinancePal
 
-[![Build](https://github.com/alexanderschnell/PersonalFinanceTracker/actions/workflows/build.yml/badge.svg)](https://github.com/alexanderschnell/PersonalFinanceTracker/actions/workflows/build.yml)
+[![Build](https://github.com/alexanderschnell/personal-finance-tracker/actions/workflows/build.yml/badge.svg)](https://github.com/alexanderschnell/personal-finance-tracker/actions/workflows/build.yml)
 
 My personal finance app, built to **track my debts and pay them off**. It's a JavaFX desktop app I use for my own money and keep improving over time.
 
