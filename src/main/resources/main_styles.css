@@ -1,99 +1,339 @@
-/* Main background */
+/* =========================================================
+   MyFinancePal: "liquid metal" theme
+   Deep gunmetal surfaces, machined chrome edges, and polished
+   chrome lettering with a mercury-like reflection band.
+   Loaded on the main window, every dialog and every pop-up
+   window (see Theme.java), so they all match.
+   ========================================================= */
+
 .root {
-    -fx-background-color: linear-gradient(to bottom right, #1a1a1a, #2d2d2d);
+    /* palette (looked-up colours, used throughout) */
+    gunmetal-0: #0c0e11;
+    gunmetal-1: #14171b;
+    gunmetal-2: #1c1f24;
+    gunmetal-3: #262a30;
+    gunmetal-4: #333840;
+    rim-hi: #6b737e;
+    rim-lo: #08090b;
+    silver: #c9ced6;
+    silver-dim: #8b939e;
+    ice: #9cc9f0;
+    mint: #7fe3ae;
+    copper: #ff9a7f;
+
+    /* chrome lettering: bright top, a dark reflection band through the
+       middle, light again at the bottom, like a polished metal surface */
+    chrome-text: linear-gradient(to bottom, #ffffff 0%, #e4e8ed 38%, #7d858f 50%, #b9c0c8 66%, #f2f4f7 100%);
+    chrome-face: linear-gradient(to bottom, #fbfcfd 0%, #dde2e8 44%, #a7afb9 50%, #cfd5dc 74%, #eef1f4 100%);
+    chrome-face-hover: linear-gradient(to bottom, #ffffff 0%, #eaeef2 44%, #b9c1ca 50%, #dfe4ea 74%, #f8fafb 100%);
+    chrome-face-pressed: linear-gradient(to bottom, #a7afb9 0%, #c3cad2 50%, #dde2e8 100%);
+    machined-rim: linear-gradient(to bottom, rim-hi, #2a2e34 40%, rim-lo);
+
+    /* modena base colours, so built-in controls (tables, fields, dialogs,
+       scroll bars, charts) follow the dark metal theme automatically */
+    -fx-base: #2b2f36;
+    -fx-background: gunmetal-1;
+    -fx-control-inner-background: gunmetal-2;
+    -fx-control-inner-background-alt: #20242a;
+    -fx-accent: #5d8fbf;
+    -fx-focus-color: ice;
+    -fx-faint-focus-color: rgba(156, 201, 240, 0.18);
+    -fx-selection-bar: #3c5f82;
+    -fx-selection-bar-non-focused: #2f3e4e;
+
+    -fx-background-color: linear-gradient(to bottom, #171a1f, gunmetal-0);
     -fx-font-family: 'Segoe UI', sans-serif;
 }
 
-/* Main menu buttons */
+/* ---------- Buttons: polished chrome pills ---------- */
 .button {
-    -fx-background-color: #2196F3;
-    -fx-text-fill: white;
-    -fx-font-size: 14px;
-    -fx-padding: 15 40;
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 2);
+    -fx-background-color: rim-lo, chrome-face;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 20, 19;
+    -fx-text-fill: #14171b;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-padding: 8 20;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 8, 0, 0, 2);
     -fx-cursor: hand;
 }
 
 .button:hover {
-    -fx-background-color: #1976D2;
-    -fx-translate-y: -2;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.4), 15, 0, 0, 4);
+    -fx-background-color: rim-lo, chrome-face-hover;
+    -fx-effect: dropshadow(gaussian, rgba(156, 201, 240, 0.35), 12, 0, 0, 1);
 }
 
 .button:pressed {
-    -fx-background-color: #0D47A1;
-    -fx-translate-y: 0;
+    -fx-background-color: rim-lo, chrome-face-pressed;
+    -fx-effect: innershadow(gaussian, rgba(0, 0, 0, 0.45), 6, 0, 0, 1);
 }
 
-.root {
-    -fx-background-color: #f5f5f5;
-    -fx-font-family: 'Segoe UI', sans-serif;
+.button:focused {
+    -fx-background-color: ice, rim-lo, chrome-face;
+    -fx-background-insets: -1, 0, 1;
+    -fx-background-radius: 21, 20, 19;
+}
+
+/* ---------- Window chrome: header and sidebar ---------- */
+.header {
+    /* a gunmetal bar with a thin chrome seam along its bottom edge that
+       catches the light in the middle */
+    -fx-background-color:
+        linear-gradient(to right, #23272d, #aeb6c0 50%, #23272d),
+        linear-gradient(to bottom, #2c3037 0%, #1d2025 55%, #16181c 100%);
+    -fx-background-insets: 0, 0 0 1 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 14, 0, 0, 3);
+}
+
+.header-title {
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: chrome-text;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.8), 2, 0, 0, 1);
 }
 
 .sidebar {
-    -fx-background-color: #2c3e50;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.2), 10, 0, 0, 0);
+    /* brushed gunmetal with a chrome seam down its right edge */
+    -fx-background-color:
+        linear-gradient(to bottom, #1a1d22 0%, #7d858f 30%, #3a3f47 80%, #1a1d22 100%),
+        linear-gradient(to right, #191c21 0%, #22262c 70%, #1a1d22 100%);
+    -fx-background-insets: 0, 0 1 0 0;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.55), 14, 0, 2, 0);
 }
 
 .nav-button {
     -fx-background-color: transparent;
-    -fx-text-fill: white;
+    -fx-background-radius: 10;
+    -fx-text-fill: silver;
     -fx-font-size: 14px;
-    -fx-padding: 15 20;
+    -fx-font-weight: normal;
+    -fx-padding: 12 18;
+    -fx-alignment: center-left;
+    -fx-effect: null;
     -fx-cursor: hand;
 }
 
 .nav-button:hover {
-    -fx-background-color: rgba(255, 255, 255, 0.1);
+    /* a liquid sheen slides under the label */
+    -fx-background-color:
+        rgba(0, 0, 0, 0.4),
+        linear-gradient(to bottom, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.0) 51%, rgba(255, 255, 255, 0.07) 100%);
+    -fx-background-insets: 0, 1;
+    -fx-text-fill: #ffffff;
+    -fx-effect: null;
 }
 
-.header {
-    -fx-background-color: white;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 5, 0, 0, 2);
+/* keyboard focus: just a faint ring (not the chrome .button focus look) */
+.nav-button:focused {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-border-color: rgba(156, 201, 240, 0.35);
+    -fx-border-radius: 10;
+    -fx-effect: null;
 }
 
-.header-title {
-    -fx-font-size: 24px;
-    -fx-font-weight: bold;
+/* the screen you're on: a recessed metal plate with a liquid ice edge */
+.nav-button.nav-selected, .nav-button.nav-selected:focused, .nav-button:pressed {
+    -fx-background-color:
+        linear-gradient(to bottom, #b5dafa, #4f86b8 50%, #24405c),
+        linear-gradient(to bottom, #3a4049, #2a2e35);
+    -fx-background-insets: 0, 1 1 1 4;
+    -fx-text-fill: #ffffff;
+    -fx-effect: null;
+}
+
+/* ---------- Content ---------- */
+.main-content {
+    -fx-background-color: transparent;
 }
 
 .summary-card {
-    -fx-background-color: white;
-    -fx-background-radius: 5;
-    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 2);
+    /* graphite face inside a machined rim, lit from above */
+    -fx-background-color: machined-rim, linear-gradient(to bottom, #2b3037 0%, gunmetal-2 55%, #181b1f 100%);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 12, 11;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 16, 0, 0, 4);
 }
 
 .card-title {
-    -fx-font-size: 14px;
-    -fx-text-fill: #666;
+    -fx-font-size: 13px;
+    -fx-text-fill: silver-dim;
 }
 
 .card-value {
-    -fx-font-size: 24px;
+    -fx-font-size: 25px;
     -fx-font-weight: bold;
+    -fx-text-fill: chrome-text;
 }
 
 .section-header {
     -fx-font-size: 18px;
     -fx-font-weight: bold;
     -fx-padding: 10 0;
+    -fx-text-fill: chrome-text;
 }
 
 .action-button {
-    -fx-background-color: #2196F3;
-    -fx-text-fill: white;
     -fx-font-size: 14px;
-    -fx-padding: 10 20;
-    -fx-background-radius: 5;
-    -fx-cursor: hand;
+    -fx-padding: 10 22;
 }
 
-.action-button:hover {
-    -fx-background-color: #1976D2;
+/* ---------- Built-in controls ---------- */
+.label {
+    -fx-text-fill: silver;
 }
 
-.main-content {
-    -fx-background-color: #f5f5f5;
+.text-field, .combo-box, .date-picker, .text-area {
+    -fx-background-color: rim-lo, linear-gradient(to bottom, #121418, gunmetal-2);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 8, 7;
+    -fx-text-fill: #e8ebef;
+    -fx-prompt-text-fill: #66707b;
 }
 
+.text-field:focused, .combo-box:focused, .date-picker:focused, .text-area:focused {
+    -fx-background-color: ice, rim-lo, linear-gradient(to bottom, #121418, gunmetal-2);
+    -fx-background-insets: -1, 0, 1;
+    -fx-background-radius: 9, 8, 7;
+}
+
+.scroll-bar {
+    -fx-background-color: transparent;
+}
+.scroll-bar .thumb {
+    -fx-background-color: linear-gradient(to right, #4a5058, #353a41);
+    -fx-background-radius: 6;
+}
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 3 0 3;
+}
+
+/* Tables */
+.table-view {
+    -fx-background-color: machined-rim, gunmetal-2;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 10, 9;
+    -fx-padding: 1;
+}
+.table-view .column-header-background {
+    -fx-background-color: linear-gradient(to bottom, #3a3f47 0%, #2a2e34 50%, #23272c 51%, #2c3037 100%);
+    -fx-background-radius: 9 9 0 0;
+}
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent rgba(0, 0, 0, 0.4) transparent transparent;
+}
+.table-view .column-header .label {
+    -fx-text-fill: chrome-text;
+    -fx-font-weight: bold;
+}
+.table-row-cell {
+    -fx-background-color: gunmetal-2;
+    -fx-text-background-color: silver;
+}
+.table-row-cell:odd {
+    -fx-background-color: #20242a;
+}
+.table-row-cell:selected {
+    -fx-background-color: linear-gradient(to bottom, #4b6f93, #33516f);
+}
+
+/* Charts: dark plot, faint grid, silver text */
+.chart {
+    -fx-padding: 12;
+}
+.chart-title, .axis-label {
+    -fx-text-fill: silver;
+}
+.axis {
+    -fx-tick-label-fill: silver-dim;
+}
+.chart-plot-background {
+    -fx-background-color: rgba(0, 0, 0, 0.25);
+}
+.chart-vertical-grid-lines, .chart-horizontal-grid-lines {
+    -fx-stroke: rgba(255, 255, 255, 0.06);
+}
+.chart-legend {
+    -fx-background-color: rgba(255, 255, 255, 0.04);
+    -fx-background-radius: 8;
+}
+.chart-legend-item {
+    -fx-text-fill: silver;
+}
+/* line series: liquid ice and liquid copper */
+.default-color0.chart-series-line { -fx-stroke: #9cc9f0; -fx-stroke-width: 2.5px; }
+.default-color1.chart-series-line { -fx-stroke: #ff9a7f; -fx-stroke-width: 2.5px; }
+.default-color0.chart-line-symbol, .default-color0.chart-legend-item-symbol { -fx-background-color: #9cc9f0, #14171b; }
+.default-color1.chart-line-symbol, .default-color1.chart-legend-item-symbol { -fx-background-color: #ff9a7f, #14171b; }
+/* pie slices in a cool metal range */
+.default-color0.chart-pie { -fx-pie-color: #9cc9f0; }
+.default-color1.chart-pie { -fx-pie-color: #ff9a7f; }
+.default-color2.chart-pie { -fx-pie-color: #7fe3ae; }
+.default-color3.chart-pie { -fx-pie-color: #c9ced6; }
+.default-color4.chart-pie { -fx-pie-color: #e6c77a; }
+.default-color5.chart-pie { -fx-pie-color: #b49cf0; }
+.default-color6.chart-pie { -fx-pie-color: #6fb3c9; }
+.default-color7.chart-pie { -fx-pie-color: #8b939e; }
+.default-color0.pie-legend-symbol { -fx-background-color: #9cc9f0; }
+.default-color1.pie-legend-symbol { -fx-background-color: #ff9a7f; }
+.default-color2.pie-legend-symbol { -fx-background-color: #7fe3ae; }
+.default-color3.pie-legend-symbol { -fx-background-color: #c9ced6; }
+.default-color4.pie-legend-symbol { -fx-background-color: #e6c77a; }
+.default-color5.pie-legend-symbol { -fx-background-color: #b49cf0; }
+.default-color6.pie-legend-symbol { -fx-background-color: #6fb3c9; }
+.default-color7.pie-legend-symbol { -fx-background-color: #8b939e; }
+.chart-pie {
+    -fx-border-color: #14171b;
+}
+
+/* Sliders: a chrome knob in a dark machined channel */
+.slider .track {
+    -fx-background-color: rim-lo, linear-gradient(to bottom, #0a0b0d, #1b1e22);
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 4, 3;
+    -fx-pref-height: 8;
+}
+.slider .thumb {
+    -fx-background-color: rim-lo, chrome-face;
+    -fx-background-insets: 0, 1;
+    -fx-background-radius: 10, 9;
+    -fx-padding: 9;
+    -fx-effect: dropshadow(gaussian, rgba(0, 0, 0, 0.6), 6, 0, 0, 1);
+}
+.slider .thumb:hover {
+    -fx-background-color: rim-lo, chrome-face-hover;
+}
+
+.chart-pie-label {
+    -fx-fill: silver;
+}
+.chart-pie-label-line {
+    -fx-stroke: silver-dim;
+}
+
+/* Dialogs */
+.dialog-pane {
+    -fx-background-color: linear-gradient(to bottom, #20242a, gunmetal-1);
+}
+.dialog-pane > .header-panel {
+    -fx-background-color: linear-gradient(to bottom, #2c3037, #1d2025);
+    -fx-border-color: transparent transparent rim-lo transparent;
+}
+.dialog-pane > .header-panel .label {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: chrome-text;
+}
+.dialog-pane > .content.label {
+    -fx-text-fill: silver;
+}
+
+/* Summary (Financial Overview) screen */
+.dashboard-title {
+    -fx-text-fill: chrome-text;
+}
+.summary-box .summary-label {
+    -fx-text-fill: silver;
+}

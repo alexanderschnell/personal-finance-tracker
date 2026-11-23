@@ -97,11 +97,11 @@ public class FinanceDashboard extends VBox implements TransactionListener {
 
         // Add color for positive or negative balance
         if (balance.compareTo(BigDecimal.ZERO) > 0) {
-            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #388E3C;");  // Green for positive balance
+            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #7fe3ae;");  // liquid mint for a positive balance
         } else if (balance.compareTo(BigDecimal.ZERO) < 0) {
-            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #D32F2F;");  // Red for negative balance
+            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #ff9a7f;");  // liquid copper for a negative balance
         } else {
-            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #1976D2;");  // Blue for zero balance
+            balanceLabel.setStyle(balanceLabel.getStyle() + " -fx-text-fill: #9cc9f0;");  // liquid ice for zero
         }
 
         summaryBox.getChildren().addAll(incomeLabel, expensesLabel, balanceLabel);

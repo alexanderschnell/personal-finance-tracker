@@ -165,7 +165,7 @@ public class ViewTransactionsWindow implements TransactionListener {
         layout.getChildren().addAll(summaryLayout, table);
 
         // Create the scene
-        Scene scene = new Scene(layout, 800, 600);
+        Scene scene = Theme.apply(new Scene(layout, 800, 600));
         scene.getStylesheets().add(getClass().getResource("/view_transaction_window_styles.css").toExternalForm());
 
         // Make stage resizable

@@ -65,7 +65,7 @@ public class SummaryWindow {
         mainContainer.getChildren().add(grid);
 
         // Create scene
-        Scene scene = new Scene(mainContainer, 500, 400);
+        Scene scene = Theme.apply(new Scene(mainContainer, 500, 400));
         scene.getStylesheets().addAll(
                 getClass().getResource("/view_summary_styles.css").toExternalForm()
         );

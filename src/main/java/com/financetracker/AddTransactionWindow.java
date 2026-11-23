@@ -99,7 +99,7 @@ public class AddTransactionWindow {
                 transactionManager.addTransaction(transaction);
 
                 // Show success message
-                Alert alert = new Alert(Alert.AlertType.INFORMATION);
+                Alert alert = Theme.apply(new Alert(Alert.AlertType.INFORMATION));
                 alert.setTitle("Success");
                 alert.setContentText("Transaction added successfully!");
                 alert.showAndWait();
@@ -107,12 +107,12 @@ public class AddTransactionWindow {
                 // Close the window
                 stage.close();
             } catch (NumberFormatException ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = Theme.apply(new Alert(Alert.AlertType.ERROR));
                 alert.setTitle("Error");
                 alert.setContentText("Please enter a valid amount!");
                 alert.showAndWait();
             } catch (Exception ex) {
-                Alert alert = new Alert(Alert.AlertType.ERROR);
+                Alert alert = Theme.apply(new Alert(Alert.AlertType.ERROR));
                 alert.setTitle("Error");
                 alert.setContentText("Error adding transaction: " + ex.getMessage());
                 alert.showAndWait();
@@ -121,8 +121,8 @@ public class AddTransactionWindow {
 
         grid.getStyleClass().add("add-transaction-grid");
 
-        Scene scene = new Scene(grid);
-        scene.getStylesheets().add("add_transaction_window_styles.css");
+        Scene scene = Theme.apply(new Scene(grid));
+        scene.getStylesheets().add(getClass().getResource("/add_transaction_window_styles.css").toExternalForm());
 
         scene.getRoot().getStyleClass().add("add-transaction-window");
 
