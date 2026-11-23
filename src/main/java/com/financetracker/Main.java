@@ -49,8 +49,7 @@ public class Main extends Application implements TransactionListener {
 
             // Create scene
             Scene scene = new Scene(mainLayout, 1280, 760);
-            scene.getStylesheets().add(getClass().getResource("/main_styles.css").toExternalForm());
-            scene.getStylesheets().add(getClass().getResource("/debt_styles.css").toExternalForm());
+            Theme.apply(scene);
 
             primaryStage.setTitle("MyFinancePal");
             primaryStage.setScene(scene);
@@ -112,6 +111,15 @@ public class Main extends Application implements TransactionListener {
         settingsBtn.setOnAction(e -> mainLayout.setCenter(createSettingsView()));
 
         sidebar.getChildren().addAll(debtsBtn, planBtn, dashboardBtn, transactionsBtn, summaryBtn, settingsBtn);
+
+        // Highlight the screen you're on (the app opens on Debts)
+        for (javafx.scene.Node n : sidebar.getChildren()) {
+            n.addEventHandler(javafx.event.ActionEvent.ACTION, e -> {
+                sidebar.getChildren().forEach(b -> b.getStyleClass().remove("nav-selected"));
+                n.getStyleClass().add("nav-selected");
+            });
+        }
+        debtsBtn.getStyleClass().add("nav-selected");
         return sidebar;
     }
 

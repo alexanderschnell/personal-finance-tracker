@@ -123,7 +123,7 @@ final class DebtDialogs {
     }
 
     static void historyDialog(Debt debt, List<Payment> payments) {
-        Dialog<Void> dialog = new Dialog<>();
+        Dialog<Void> dialog = Theme.apply(new Dialog<Void>());
         dialog.setTitle("Payment history");
         dialog.setHeaderText(debt.getName() + " - " + payments.size() + " payment" + (payments.size() == 1 ? "" : "s"));
         dialog.getDialogPane().getButtonTypes().add(ButtonType.CLOSE);
@@ -152,14 +152,14 @@ final class DebtDialogs {
     }
 
     static boolean confirm(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.OK, ButtonType.CANCEL);
+        Alert alert = Theme.apply(new Alert(Alert.AlertType.CONFIRMATION, message, ButtonType.OK, ButtonType.CANCEL));
         alert.setTitle(title);
         alert.setHeaderText(null);
         return alert.showAndWait().filter(b -> b == ButtonType.OK).isPresent();
     }
 
     static void celebrate(Debt debt) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        Alert alert = Theme.apply(new Alert(Alert.AlertType.INFORMATION));
         alert.setTitle("Debt defeated!");
         alert.setHeaderText("🎉  " + debt.getName() + " is paid off!");
         alert.setContentText(String.format("That's $%,.2f gone for good. Its minimum payment can now go toward your next debt.",
@@ -168,7 +168,7 @@ final class DebtDialogs {
     }
 
     static void error(String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR, message, ButtonType.OK);
+        Alert alert = Theme.apply(new Alert(Alert.AlertType.ERROR, message, ButtonType.OK));
         alert.setHeaderText(null);
         alert.showAndWait();
     }
@@ -197,7 +197,7 @@ final class DebtDialogs {
     }
 
     private static <T> Dialog<T> baseDialog(String title, String header) {
-        Dialog<T> dialog = new Dialog<>();
+        Dialog<T> dialog = Theme.apply(new Dialog<>());
         dialog.setTitle(title);
         dialog.setHeaderText(header);
         dialog.getDialogPane().getButtonTypes().addAll(
@@ -230,7 +230,7 @@ final class DebtDialogs {
         Label l = new Label(text);
         l.setWrapText(true);
         l.setMaxWidth(380);
-        l.setStyle("-fx-text-fill: #777; -fx-font-size: 11px;");
+        l.setStyle("-fx-text-fill: #8b939e; -fx-font-size: 11px;");
         return l;
     }
 
